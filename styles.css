@@ -1,0 +1,600 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import "tailwindcss";
+
+@theme {
+  --font-serif: 'Playfair Display', Georgia, Cambria, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --color-gold-100: #fff9db;
+  --color-gold-200: #fbf0b9;
+  --color-gold-300: #f7e07a;
+  --color-gold-400: #eec950;
+  --color-gold-500: #d4af37;
+  --color-gold-600: #b89025;
+  --color-gold-700: #8f6c16;
+  --color-gold-800: #684e0e;
+  --color-luxury-black: #000000;
+  --color-luxury-obsidian: #050505;
+  --color-luxury-charcoal: #0a0a0a;
+  --color-luxury-dark: #121212;
+  --color-luxury-card: #141414;
+  --color-luxury-elevated: #1a1a1a;
+  --color-luxury-surface: #222222;
+}
+
+html, body {
+  background-color: #000000 !important;
+  color: #f5f5f5;
+  color-scheme: dark;
+}
+
+/* Material icon sizing & alignment */
+.mat-icon {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Ultra Luxury Gold Glow & Foil effects */
+.gold-glow {
+  box-shadow: 0 0 25px -5px rgba(212, 175, 55, 0.35);
+}
+
+.gold-glow-lg {
+  box-shadow: 0 0 50px -10px rgba(212, 175, 55, 0.45);
+}
+
+.gold-text-gradient {
+  background: linear-gradient(135deg, #fbf0b9 0%, #f7e07a 25%, #d4af37 50%, #fbf0b9 75%, #b89025 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gold-foil-bg {
+  background: linear-gradient(135deg, #fbf0b9 0%, #f7e07a 20%, #d4af37 50%, #eec950 80%, #b89025 100%);
+}
+
+.gold-border-gradient {
+  border-image: linear-gradient(to bottom right, #fbf0b9, #d4af37, #8f6c16) 1;
+}
+
+.gold-border-glow {
+  box-shadow: 0 0 20px rgba(212, 175, 55, 0.2), inset 0 0 20px rgba(212, 175, 55, 0.08);
+}
+
+/* Keyframe animations for rich atmospheric Hero background */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1.5deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-1.5deg); }
+}
+
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.65; transform: scale(1.06); }
+}
+
+.animate-float-slow {
+  animation: floatSlow 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: floatReverse 10s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spinSlow 55s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulseGlow 6s ease-in-out infinite;
+}
+
+/* Custom scrollbar for Luxury Black & Gold theme */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: #000000;
+}
+::-webkit-scrollbar-thumb {
+  background: #2a2412;
+  border: 1px solid rgba(212, 175, 55, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #d4af37;
+}
+
+/* ========================================================================= */
+/* LUXURY SCROLL REVEAL ANIMATIONS (Bidirectional - Scroll Up & Scroll Down)  */
+/* ========================================================================= */
+.lux-reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.lux-reveal-left {
+  opacity: 0;
+  transform: translateX(-36px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.lux-reveal-right {
+  opacity: 0;
+  transform: translateX(36px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.lux-reveal-scale {
+  opacity: 0;
+  transform: scale(0.94) translateY(24px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Instant smooth reset when out of view, so scrolling back up/down re-animates freshly */
+.lux-reveal:not(.is-revealed),
+.lux-reveal-left:not(.is-revealed),
+.lux-reveal-right:not(.is-revealed),
+.lux-reveal-scale:not(.is-revealed) {
+  transition-duration: 0.15s;
+  transition-delay: 0s !important;
+}
+
+/* Active State applied whenever element enters viewport (scroll down OR scroll up) */
+.lux-reveal.is-revealed,
+.lux-reveal-left.is-revealed,
+.lux-reveal-right.is-revealed,
+.lux-reveal-scale.is-revealed {
+  opacity: 1;
+  transform: translate(0, 0) scale(1);
+}
+
+/* Luxury Stagger Delays for Grid Items & Child Cards (Only applied during entrance) */
+.is-revealed.lux-delay-1, .is-revealed .lux-delay-1 { transition-delay: 70ms; }
+.is-revealed.lux-delay-2, .is-revealed .lux-delay-2 { transition-delay: 140ms; }
+.is-revealed.lux-delay-3, .is-revealed .lux-delay-3 { transition-delay: 210ms; }
+.is-revealed.lux-delay-4, .is-revealed .lux-delay-4 { transition-delay: 280ms; }
+.is-revealed.lux-delay-5, .is-revealed .lux-delay-5 { transition-delay: 350ms; }
+.is-revealed.lux-delay-6, .is-revealed .lux-delay-6 { transition-delay: 420ms; }
+.is-revealed.lux-delay-7, .is-revealed .lux-delay-7 { transition-delay: 490ms; }
+
+/* Luxury Radiant Golden Border Glow Transition on Entry */
+.lux-border-glow {
+  transition: border-color 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lux-border-glow.is-revealed {
+  border-color: rgba(212, 175, 55, 0.65);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.95), 0 0 30px rgba(212, 175, 55, 0.32);
+}
+
+/* Deep 24K Royal Gold Aura */
+.lux-gold-aura {
+  position: relative;
+}
+
+.lux-gold-aura::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(251, 240, 185, 0.4), rgba(212, 175, 55, 0.15), rgba(184, 144, 37, 0.3));
+  opacity: 0;
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lux-gold-aura.is-revealed::before {
+  opacity: 1;
+}
+
+/* Rich 24K Gold Sheen Wave on Card Entry (Sweeps across on both scroll down & up) */
+.lux-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-sheen::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -140%;
+  width: 70%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(251, 240, 185, 0.08) 25%,
+    rgba(212, 175, 55, 0.28) 50%,
+    rgba(251, 240, 185, 0.15) 75%,
+    transparent 100%
+  );
+  transform: skewX(-25deg);
+  transition: none;
+  pointer-events: none;
+  z-index: 20;
+}
+
+.lux-sheen.is-revealed::after {
+  left: 170%;
+  transition: left 1.35s cubic-bezier(0.16, 1, 0.3, 1) 0.12s;
+}
+
+/* Luxury Expanding Golden Divider Line */
+.lux-gold-divider {
+  width: 0%;
+  opacity: 0;
+  transition: width 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease;
+}
+
+.lux-gold-divider.is-revealed {
+  width: 100%;
+  opacity: 1;
+}
+
+/* Metallic 24K Gold Shimmer Animation for Prestige Titles */
+@keyframes goldShimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.gold-shimmer-text {
+  background: linear-gradient(
+    90deg,
+    #fbf0b9 0%,
+    #ffffff 20%,
+    #f7e07a 40%,
+    #d4af37 60%,
+    #ffffff 80%,
+    #b89025 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: goldShimmer 7s ease-in-out infinite;
+}
+
+/* Golden Beacon Pulse for Key Badges */
+@keyframes goldBeaconPulse {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.5), 0 0 15px rgba(212, 175, 55, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(212, 175, 55, 0), 0 0 25px rgba(212, 175, 55, 0.6);
+  }
+}
+
+.animate-gold-beacon {
+  animation: goldBeaconPulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ========================================================================= */
+/* LUXURY BOX & INNER BOX ANIMATIONS ("IN THE BOXES")                        */
+/* ========================================================================= */
+
+/* The Box Container */
+.lux-box {
+  position: relative;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow, border-color;
+}
+
+.lux-box:hover {
+  transform: translateY(-5px);
+  border-color: rgba(212, 175, 55, 0.8) !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.98), 0 0 30px rgba(212, 175, 55, 0.3), inset 0 0 20px rgba(212, 175, 55, 0.1) !important;
+}
+
+/* In the Boxes: Icon Animation */
+.lux-box-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: scale(0.9);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              background-color 0.4s ease;
+  will-change: transform, filter;
+}
+
+.is-revealed .lux-box-icon,
+.is-revealed.lux-box-icon {
+  transform: scale(1);
+  filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.35));
+}
+
+.lux-box:hover .lux-box-icon {
+  transform: scale(1.12) translateY(-2px);
+  filter: drop-shadow(0 0 16px rgba(212, 175, 55, 0.7));
+}
+
+/* In the Boxes: Badge & Category Label Animation */
+.lux-box-badge {
+  opacity: 0.85;
+  transform: translateY(4px);
+  transition: opacity 0.5s ease 0.1s, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+}
+
+.is-revealed .lux-box-badge {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* In the Boxes: Title Animation */
+.lux-box-title {
+  transform: translateY(6px);
+  opacity: 0.8;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+              opacity 0.6s ease 0.15s,
+              color 0.3s ease;
+}
+
+.is-revealed .lux-box-title {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.lux-box:hover .lux-box-title {
+  color: #fff9db !important;
+}
+
+/* In the Boxes: Description & Content Animation */
+.lux-box-desc {
+  opacity: 0.75;
+  transform: translateY(6px);
+  transition: opacity 0.65s ease 0.2s, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.is-revealed .lux-box-desc {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* In the Boxes: Interactive Action Link / Arrow */
+.lux-box-action {
+  transition: color 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lux-box-action mat-icon {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lux-box:hover .lux-box-action {
+  color: #f7e07a !important;
+}
+
+.lux-box:hover .lux-box-action mat-icon {
+  transform: translateX(5px);
+}
+
+/* In the Boxes: Metric Number Counter Animation */
+.lux-box-stat {
+  display: inline-block;
+  transform: scale(0.92);
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s,
+              text-shadow 0.5s ease;
+}
+
+.is-revealed .lux-box-stat {
+  transform: scale(1);
+  text-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+}
+
+.lux-box:hover .lux-box-stat {
+  text-shadow: 0 0 25px rgba(212, 175, 55, 0.75);
+}
+
+/* Internal Radiant Gold Shimmer Bar for Box Highlights */
+.lux-box-highlight {
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-box-highlight::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 2px;
+  height: 0%;
+  background: linear-gradient(180deg, #fbf0b9, #d4af37, transparent);
+  transition: height 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s;
+}
+
+.is-revealed .lux-box-highlight::before {
+  height: 100%;
+}
+
+/* ========================================================================= */
+/* ADVANCED LUXURY WORD-BY-WORD ANIMATION SYSTEM                             */
+/* ========================================================================= */
+
+.word-split-wrap {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+  padding-bottom: 0.15em;
+  margin-bottom: -0.15em;
+  margin-right: 0.28em;
+}
+
+.word-split {
+  display: inline-block;
+  transform: translateY(115%) rotateX(-15deg);
+  opacity: 0;
+  transition: transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s ease;
+  will-change: transform, opacity, filter;
+  filter: blur(4px);
+}
+
+.is-revealed .word-split,
+.is-revealed.word-split {
+  transform: translateY(0%) rotateX(0deg);
+  opacity: 1;
+  filter: blur(0px);
+  transition-delay: calc(var(--w-delay, 1) * 45ms);
+}
+
+:not(.is-revealed) > .word-split-wrap > .word-split,
+:not(.is-revealed) .word-split {
+  transition-duration: 0.15s;
+  transition-delay: 0s !important;
+}
+
+/* Interactive Golden Hover on Words */
+.lux-gold-word {
+  position: relative;
+  display: inline-block;
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              text-shadow 0.35s ease,
+              color 0.35s ease;
+  cursor: default;
+}
+
+.lux-gold-word:hover {
+  transform: translateY(-2px) scale(1.03);
+  text-shadow: 0 0 20px rgba(251, 240, 185, 0.85), 0 0 35px rgba(212, 175, 55, 0.6);
+}
+
+/* Luxury 24K Border Beam / Traveling Golden Light */
+.lux-beam-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.lux-beam-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: conic-gradient(
+    from var(--beam-angle, 0deg) at 50% 50%,
+    transparent 0deg,
+    transparent 280deg,
+    rgba(212, 175, 55, 0.3) 310deg,
+    #ffffff 340deg,
+    #fbf0b9 355deg,
+    transparent 360deg
+  );
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+  padding: 1.5px;
+}
+
+.lux-beam-card.is-revealed::after {
+  opacity: 1;
+  animation: beamSpin 7s linear infinite;
+}
+
+@property --beam-angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes beamSpin {
+  0% { --beam-angle: 0deg; }
+  100% { --beam-angle: 360deg; }
+}
+
+/* Ambient Section Glow Mesh */
+.section-ambient-mesh {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.section-ambient-mesh::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: 30%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 650px;
+  max-height: 650px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.08) 0%, rgba(143, 108, 22, 0.03) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(70px);
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(50px, 40px) scale(1.12); }
+  100% { transform: translate(-30px, 70px) scale(0.96); }
+}
+
+/* ========================================================================= */
+/* LUXURY GOLD-TEXTURED SCROLL PROGRESS BAR                                 */
+/* ========================================================================= */
+.lux-gold-textured-progress {
+  background: linear-gradient(
+    90deg,
+    #8f6c16 0%,
+    #b89025 15%,
+    #d4af37 30%,
+    #fbf0b9 45%,
+    #ffffff 50%,
+    #fbf0b9 55%,
+    #d4af37 70%,
+    #b89025 85%,
+    #8f6c16 100%
+  );
+  background-size: 200% auto;
+  box-shadow: 
+    0 0 16px rgba(212, 175, 55, 0.95), 
+    0 0 8px rgba(251, 240, 185, 0.6), 
+    inset 0 1px 1.5px rgba(255, 255, 255, 0.55);
+  animation: goldTextureShimmer 4s linear infinite;
+  will-change: background-position;
+}
+
+@keyframes goldTextureShimmer {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+
+
